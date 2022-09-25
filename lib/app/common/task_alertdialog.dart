@@ -5,9 +5,11 @@ class TaskAlertDialog extends StatelessWidget {
     super.key,
     required this.textEditingController,
     required this.onSave,
+    required this.onCancel
   });
   final TextEditingController textEditingController;
   final VoidCallback onSave;
+    final VoidCallback onCancel;
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +55,9 @@ class TaskAlertDialog extends StatelessWidget {
                     // },
                     child: const Text("Save")),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                  onPressed: onCancel,
+                  
+                  
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                   child: const Text("Cancel"),
                 )

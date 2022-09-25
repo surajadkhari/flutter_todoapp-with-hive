@@ -26,6 +26,7 @@ class _HomeState extends State<Home> {
         context: context,
         builder: (context) => TaskAlertDialog(
               textEditingController: taskEditingController,
+              onCancel: () => Navigator.pop(context),
               onSave: () {
                 TaskModel newTask = TaskModel(
                     taskName: taskEditingController.text,
