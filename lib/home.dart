@@ -21,26 +21,26 @@ class _HomeState extends State<Home> {
 
   TextEditingController taskEditingController = TextEditingController();
 
-  creatNewTask() {
+  void addedNewTask() {
+    TaskModel newTask =
+        TaskModel(taskName: taskEditingController.text, isTaskCompleted: false);
+
+    setState(() {
+      toDoList.add(newTask);
+      isSave = true;
+    });
+
+    Navigator.pop(context);
+    taskEditingController.clear();
+  }
+
+  void creatNewTask() {
     showDialog(
         context: context,
         builder: (context) => TaskAlertDialog(
-              textEditingController: taskEditingController,
-              onCancel: () => Navigator.pop(context),
-              onSave: () {
-                TaskModel newTask = TaskModel(
-                    taskName: taskEditingController.text,
-                    isTaskCompleted: false);
-
-                setState(() {
-                  toDoList.add(newTask);
-                  isSave = true;
-                });
-
-                Navigator.pop(context);
-                taskEditingController.clear();
-              },
-            ));
+            textEditingController: taskEditingController,
+            onCancel: () => Navigator.pop(context),
+            onSave: addedNewTask));
   }
 
   @override
@@ -57,33 +57,11 @@ class _HomeState extends State<Home> {
       ),
       body: ListView.builder(
         itemCount: toDoList.length,
-        itemBuilder: (context, index) =>
-            //  Container(
-            //       padding:
-            //           const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            //       margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 14),
-            //       decoration: const BoxDecoration(color: Colors.white),
-            //       child: Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //           Text(
-            //             toDoList[index].taskName,
-            //             style: TextStyle(
-            //                 decoration: toDoList[index].isTaskCompleted
-            //                     ? TextDecoration.lineThrough
-            //                     : TextDecoration.none),
-            //           ),
-            //           Checkbox(
-            //               value: toDoList[index].isTaskCompleted,
-            //               onChanged: (value) => changeCheckButton(index: index))
-            //         ],
-            //       ),
-            //     )
-            TodoCard(
-                isTaskcompleted: toDoList[index].isTaskCompleted,
-                onChanged: (value) => checkBoxChanged(
-                    index: index, value: toDoList[index].isTaskCompleted),
-                taskName: toDoList[index].taskName),
+        itemBuilder: (context, index) => TodoCard(
+            isTaskcompleted: toDoList[index].isTaskCompleted,
+            onChanged: (value) => checkBoxChanged(
+                index: index, value: toDoList[index].isTaskCompleted),
+            taskName: toDoList[index].taskName),
       ),
     );
   }
