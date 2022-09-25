@@ -14,18 +14,20 @@ class Home extends StatelessWidget {
       body: ListView(
         children: [
           Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
-              child: CheckboxListTile(
-                onChanged: (value) {},
-                value: true,
-                title: const Text("Learn flutter everyday"),
-              )
-              //  Row(
-              //   children: const [Text("Hello")],
-              // ),
-              )
+            padding: const EdgeInsets.all(24),
+            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            child:
+                // CheckboxListTile(
+                //   onChanged: (value) {},
+                //   value: true,
+                //   title: const Text("Learn flutter everyday"),
+                // )
+                Row(
+              children: const [Text("Hello")],
+            ),
+          )
         ],
       ),
     );
