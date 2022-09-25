@@ -24,14 +24,12 @@ class _HomeState extends State<Home> {
   void addedNewTask() {
     TaskModel newTask =
         TaskModel(taskName: taskEditingController.text, isTaskCompleted: false);
-
     setState(() {
       toDoList.add(newTask);
-      isSave = true;
+      taskEditingController.clear();
     });
 
     Navigator.pop(context);
-    taskEditingController.clear();
   }
 
   void creatNewTask() {
