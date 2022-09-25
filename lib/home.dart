@@ -18,7 +18,12 @@ class _HomeState extends State<Home> {
       taskName: "Hlelo",
     ),
   ];
-  void checkBoxChanged({required bool value, required int index}) {}
+  void checkBoxChanged({required bool value, required int index}) {
+    setState(() {
+      toDoList[index].isTaskCompleted = !toDoList[index].isTaskCompleted;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
