@@ -13,16 +13,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool isSave = false;
-  List<TaskModel> toDoList = [
-    TaskModel(
-      taskName: "Hlelo",
-    ),
-    TaskModel(
-      taskName: "Yogo",
-    ),
-    TaskModel(taskName: "learn new Flutter Widget", isTaskCompleted: true)
-  ];
-
   void checkBoxChanged({required bool value, required int index}) {
     setState(() {
       toDoList[index].isTaskCompleted = !toDoList[index].isTaskCompleted;
@@ -36,7 +26,19 @@ class _HomeState extends State<Home> {
         context: context,
         builder: (context) => TaskAlertDialog(
               textEditingController: taskEditingController,
-              onSave: () {},
+              onSave: () {
+                TaskModel newTask = TaskModel(
+                    taskName: taskEditingController.text,
+                    isTaskCompleted: false);
+
+                setState(() {
+                  toDoList.add(newTask);
+                  isSave = true;
+                });
+
+                Navigator.pop(context);
+                taskEditingController.clear();
+              },
             ));
   }
 
