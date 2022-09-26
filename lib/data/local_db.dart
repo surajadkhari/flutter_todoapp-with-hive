@@ -5,7 +5,7 @@ import '../model/task_model.dart';
 class LocalDb {
   List<TaskModel> toDoList = [];
   //reference our box
-  final _myBox = Hive.openBox("taskLocalDb");
+  final _myBox = Hive.box("mybox");
 
   void createinitalData() {
     toDoList = [
@@ -20,7 +20,12 @@ class LocalDb {
   }
 
   //load data from  Db
-  void loadData() {}
+  void loadData() {
+    toDoList = _myBox.get("taskList");
+  }
+
   //update
-  void update() {}
+  void updateData() {
+    _myBox.put("taskList", toDoList);
+  }
 }

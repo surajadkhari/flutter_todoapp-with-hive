@@ -14,18 +14,28 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    _myBox.get("taskList") == null
+        ? localDb.createinitalData()
+        : localDb.loadData();
+    super.initState();
+  }
+
   //reference hive box
-  final _myBox = Hive.openBox("taskLocalDb");
+  final _myBox = Hive.box("mybox");
+
   LocalDb localDb = LocalDb();
   bool isSave = false;
+  TextEditingController taskEditingController = TextEditingController();
+
   void checkBoxChanged({required bool value, required int index}) {
     setState(() {
       localDb.toDoList[index].isTaskCompleted =
           !localDb.toDoList[index].isTaskCompleted;
     });
+    localDb.updateData();
   }
-
-  TextEditingController taskEditingController = TextEditingController();
 
 //add new Task
   void addedNewTask() {
@@ -37,13 +47,15 @@ class _HomeState extends State<Home> {
     });
 
     Navigator.pop(context);
+    localDb.updateData();
   }
 
   //delete task
   void deleteTask({required int index}) {
     setState(() {
       localDb.toDoList.removeAt(index);
-    });
+    }); 
+    localDb.updateData();
   }
 
   void creatNewTask() {

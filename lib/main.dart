@@ -5,6 +5,6 @@ import 'app/app.dart';
 
 void main() async {
   await Hive.initFlutter();
-  var box = await Hive.openBox("taskLocalDb");
+  var box = await Hive.openBox("mybox");
   runApp(const App());
 }
