@@ -1,10 +1,17 @@
 import 'package:hive_flutter/adapters.dart';
 
-@HiveType(typeId: 0)
 class TaskModel extends HiveObject {
-  @HiveField(0,defaultValue: 0)
   final String taskName;
-   @HiveField(1)
   bool isTaskCompleted;
   TaskModel({required this.taskName, this.isTaskCompleted = false});
 }
+
+List<TaskModel> toDoList = [
+  TaskModel(
+    taskName: "Todo app",
+  ),
+  TaskModel(
+    taskName: "Add to cart",
+  ),
+  TaskModel(taskName: "E-commerce ", isTaskCompleted: true)
+];

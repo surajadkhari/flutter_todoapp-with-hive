@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:todo_app_with_hive/model/task_model.dart';
-
 import 'app/common/task_alertdialog.dart';
 import 'app/common/todo_card.dart';
-import 'data/local_db.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -16,25 +13,16 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   void initState() {
-    _myBox.get("taskList") == null
-        ? localDb.createinitalData()
-        : localDb.loadData();
     super.initState();
   }
 
-  //reference hive box
-  final _myBox = Hive.box("mybox");
-
-  LocalDb localDb = LocalDb();
   bool isSave = false;
   TextEditingController taskEditingController = TextEditingController();
 
   void checkBoxChanged({required bool value, required int index}) {
     setState(() {
-      localDb.toDoList[index].isTaskCompleted =
-          !localDb.toDoList[index].isTaskCompleted;
+      toDoList[index].isTaskCompleted = !toDoList[index].isTaskCompleted;
     });
-    localDb.updateData();
   }
 
 //add new Task
@@ -42,20 +30,18 @@ class _HomeState extends State<Home> {
     TaskModel newTask =
         TaskModel(taskName: taskEditingController.text, isTaskCompleted: false);
     setState(() {
-      localDb.toDoList.add(newTask);
+      toDoList.add(newTask);
       taskEditingController.clear();
     });
 
     Navigator.pop(context);
-    localDb.updateData();
   }
 
   //delete task
   void deleteTask({required int index}) {
     setState(() {
-      localDb.toDoList.removeAt(index);
-    }); 
-    localDb.updateData();
+      toDoList.removeAt(index);
+    });
   }
 
   void creatNewTask() {
@@ -80,15 +66,14 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: ListView.builder(
-          itemCount: localDb.toDoList.length,
+          itemCount: toDoList.length,
           itemBuilder: (context, index) {
             return TodoCard(
                 deleteFunction: (context) => deleteTask(index: index),
-                isTaskcompleted: localDb.toDoList[index].isTaskCompleted,
+                isTaskcompleted: toDoList[index].isTaskCompleted,
                 onChanged: (value) => checkBoxChanged(
-                    index: index,
-                    value: localDb.toDoList[index].isTaskCompleted),
-                taskName: localDb.toDoList[index].taskName);
+                    index: index, value: toDoList[index].isTaskCompleted),
+                taskName: toDoList[index].taskName);
           }),
     );
   }
