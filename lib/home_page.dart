@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo_app_with_hive/app/common/todo_card.dart';
+import 'package:todo_app_with_hive/common/todo_card.dart';
 
 import 'model/todo_model.dart';
 
@@ -106,12 +106,11 @@ class _HomePageState extends State<HomePage> {
         body: ValueListenableBuilder(
           valueListenable: Hive.box<TodoModel>('TODOs').listenable(),
           builder: (context, Box<TodoModel> tasks, child) {
-            Box<TodoModel> todosBox = tasks;
+            todosBox = tasks;
             return ListView.builder(
                 itemCount: tasks.values.length,
                 itemBuilder: (context, index) {
                   final todo = todosBox.getAt(index);
-
                   return TodoCard(
                       isTaskcompleted: todo!.isTaskCompleted,
                       onChanged: (value) {
@@ -121,10 +120,6 @@ class _HomePageState extends State<HomePage> {
                       },
                       taskName: todo.taskName,
                       deleteFunction: (context) => todosBox.deleteAt(index));
-                  // ListTile(
-                  //   title: Text(todo!.taskName),
-                  //   onLongPress: () => todosBox.deleteAt(index),
-                  // );
                 });
           },
         ));
