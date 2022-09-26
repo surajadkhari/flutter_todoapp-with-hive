@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 class TaskAlertDialog extends StatelessWidget {
-  const TaskAlertDialog({
-    super.key,
-    required this.textEditingController,
-    required this.onSave,
-    required this.onCancel
-  });
+  const TaskAlertDialog(
+      {super.key,
+      required this.textEditingController,
+      required this.onSave,
+      required this.onCancel});
   final TextEditingController textEditingController;
   final VoidCallback onSave;
-    final VoidCallback onCancel;
+  final VoidCallback onCancel;
 
   @override
   Widget build(BuildContext context) {
@@ -40,24 +39,9 @@ class TaskAlertDialog extends StatelessWidget {
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.green),
                     onPressed: onSave,
-                    //  () async {
-                    //   TaskModel newTask = TaskModel(
-                    //       taskName: taskEditingController.text,
-                    //       isTaskCompleted: false);
-
-                    //   setState(() {
-                    //     toDoList.add(newTask);
-                    //     isSave = true;
-                    //   });
-
-                    //   Navigator.pop(context);
-                    //   taskEditingController.clear();
-                    // },
                     child: const Text("Save")),
                 ElevatedButton(
                   onPressed: onCancel,
-                  
-                  
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                   child: const Text("Cancel"),
                 )

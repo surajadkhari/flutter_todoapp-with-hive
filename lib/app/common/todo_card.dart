@@ -16,36 +16,38 @@ class TodoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Slidable(
-      enabled: true,
-      endActionPane: ActionPane(motion: const StretchMotion(), children: [
-        SlidableAction(
-          onPressed: deleteFunction,
-          icon: Icons.delete,
-          borderRadius: BorderRadius.circular(10),
-          backgroundColor: Colors.red,
-        ),
-      ]),
-      child: Container(
-        padding: const EdgeInsets.all(25),
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(10)),
-        child: Row(
-          children: [
-            Checkbox(
-              value: isTaskcompleted,
-              onChanged: onChanged,
-              activeColor: Colors.green,
-            ),
-            Text(
-              taskName,
-              style: TextStyle(
-                  decoration: isTaskcompleted
-                      ? TextDecoration.lineThrough
-                      : TextDecoration.none),
-            )
-          ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 25, right: 25, bottom: 25, top: 14),
+      child: Slidable(
+        enabled: true,
+        endActionPane: ActionPane(motion: const StretchMotion(), children: [
+          SlidableAction(
+            onPressed: deleteFunction,
+            icon: Icons.delete,
+            borderRadius: BorderRadius.circular(10),
+            backgroundColor: Colors.red,
+          ),
+        ]),
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(10)),
+          child: Row(
+            children: [
+              Checkbox(
+                value: isTaskcompleted,
+                onChanged: onChanged,
+                activeColor: Colors.green,
+              ),
+              Text(
+                taskName,
+                style: TextStyle(
+                    decoration: isTaskcompleted
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none),
+              )
+            ],
+          ),
         ),
       ),
     );

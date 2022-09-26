@@ -21,6 +21,7 @@ class _HomeState extends State<Home> {
 
   TextEditingController taskEditingController = TextEditingController();
 
+//add new Task
   void addedNewTask() {
     TaskModel newTask =
         TaskModel(taskName: taskEditingController.text, isTaskCompleted: false);
@@ -30,6 +31,13 @@ class _HomeState extends State<Home> {
     });
 
     Navigator.pop(context);
+  }
+
+  //delete task
+  void deleteTask({required int index}) {
+    setState(() {
+      toDoList.removeAt(index);
+    });
   }
 
   void creatNewTask() {
@@ -56,6 +64,7 @@ class _HomeState extends State<Home> {
       body: ListView.builder(
         itemCount: toDoList.length,
         itemBuilder: (context, index) => TodoCard(
+            deleteFunction: (context) => deleteTask(index: index),
             isTaskcompleted: toDoList[index].isTaskCompleted,
             onChanged: (value) => checkBoxChanged(
                 index: index, value: toDoList[index].isTaskCompleted),
