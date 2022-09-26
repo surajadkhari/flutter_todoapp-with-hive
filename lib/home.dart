@@ -11,13 +11,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   bool isSave = false;
   TextEditingController taskEditingController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   void checkBoxChanged({required bool value, required int index}) {
     setState(() {
@@ -30,11 +26,12 @@ class _HomeState extends State<Home> {
     TaskModel newTask =
         TaskModel(taskName: taskEditingController.text, isTaskCompleted: false);
     setState(() {
-      toDoList.add(newTask);
+      if (_formKey.currentState!.validate()) {
+        toDoList.add(newTask);
+        Navigator.pop(context);
+      }
       taskEditingController.clear();
     });
-
-    Navigator.pop(context);
   }
 
   //delete task
@@ -47,10 +44,13 @@ class _HomeState extends State<Home> {
   void creatNewTask() {
     showDialog(
         context: context,
-        builder: (context) => TaskAlertDialog(
-            textEditingController: taskEditingController,
-            onCancel: () => Navigator.pop(context),
-            onSave: addedNewTask));
+        builder: (context) => Form(
+              key: _formKey,
+              child: TaskAlertDialog(
+                  textEditingController: taskEditingController,
+                  onCancel: () => Navigator.pop(context),
+                  onSave: addedNewTask),
+            ));
   }
 
   @override
