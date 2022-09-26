@@ -5,11 +5,13 @@ class TodoCard extends StatelessWidget {
   final bool isTaskcompleted;
   final String taskName;
   final Function(bool?)? onChanged;
+  final Function(BuildContext)? deleteFunction;
   const TodoCard(
       {Key? key,
       required this.isTaskcompleted,
       required this.onChanged,
-      required this.taskName})
+      required this.taskName,
+      required this.deleteFunction})
       : super(key: key);
 
   @override
@@ -18,14 +20,14 @@ class TodoCard extends StatelessWidget {
       enabled: true,
       endActionPane: ActionPane(motion: const StretchMotion(), children: [
         SlidableAction(
-          onPressed: ((context) {}),
+          onPressed: deleteFunction,
           icon: Icons.delete,
           borderRadius: BorderRadius.circular(10),
           backgroundColor: Colors.red,
         ),
       ]),
       child: Container(
-        padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.all(25),
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(10)),
