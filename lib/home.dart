@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:todo_app_with_hive/model/task_model.dart';
 
 import 'app/common/task_alertdialog.dart';
 import 'app/common/todo_card.dart';
+import 'data/local_db.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,10 +14,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  //reference hive box
+  final _myBox = Hive.openBox("taskLocalDb");
+  LocalDb localDb = LocalDb();
   bool isSave = false;
   void checkBoxChanged({required bool value, required int index}) {
     setState(() {
-      toDoList[index].isTaskCompleted = !toDoList[index].isTaskCompleted;
+      localDb.toDoList[index].isTaskCompleted =
+          !localDb.toDoList[index].isTaskCompleted;
     });
   }
 
@@ -26,7 +32,7 @@ class _HomeState extends State<Home> {
     TaskModel newTask =
         TaskModel(taskName: taskEditingController.text, isTaskCompleted: false);
     setState(() {
-      toDoList.add(newTask);
+      localDb.toDoList.add(newTask);
       taskEditingController.clear();
     });
 
@@ -36,7 +42,7 @@ class _HomeState extends State<Home> {
   //delete task
   void deleteTask({required int index}) {
     setState(() {
-      toDoList.removeAt(index);
+      localDb.toDoList.removeAt(index);
     });
   }
 
@@ -62,14 +68,15 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: ListView.builder(
-          itemCount: toDoList.length,
+          itemCount: localDb.toDoList.length,
           itemBuilder: (context, index) {
             return TodoCard(
                 deleteFunction: (context) => deleteTask(index: index),
-                isTaskcompleted: toDoList[index].isTaskCompleted,
+                isTaskcompleted: localDb.toDoList[index].isTaskCompleted,
                 onChanged: (value) => checkBoxChanged(
-                    index: index, value: toDoList[index].isTaskCompleted),
-                taskName: toDoList[index].taskName);
+                    index: index,
+                    value: localDb.toDoList[index].isTaskCompleted),
+                taskName: localDb.toDoList[index].taskName);
           }),
     );
   }
