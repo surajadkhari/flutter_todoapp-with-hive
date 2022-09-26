@@ -62,14 +62,15 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: ListView.builder(
-        itemCount: toDoList.length,
-        itemBuilder: (context, index) => TodoCard(
-            deleteFunction: (context) => deleteTask(index: index),
-            isTaskcompleted: toDoList[index].isTaskCompleted,
-            onChanged: (value) => checkBoxChanged(
-                index: index, value: toDoList[index].isTaskCompleted),
-            taskName: toDoList[index].taskName),
-      ),
+          itemCount: toDoList.length,
+          itemBuilder: (context, index) {
+            return TodoCard(
+                deleteFunction: (context) => deleteTask(index: index),
+                isTaskcompleted: toDoList[index].isTaskCompleted,
+                onChanged: (value) => checkBoxChanged(
+                    index: index, value: toDoList[index].isTaskCompleted),
+                taskName: toDoList[index].taskName);
+          }),
     );
   }
 }
