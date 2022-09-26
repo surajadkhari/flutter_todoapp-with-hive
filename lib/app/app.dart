@@ -8,7 +8,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const Home(),
+      home: const LoginPage(),
       theme: ThemeData(
         fontFamily: "Product Sans",
         scaffoldBackgroundColor: const Color(0xffE1E8EC),

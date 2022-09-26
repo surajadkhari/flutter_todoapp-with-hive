@@ -21,6 +21,7 @@ class TaskAlertDialog extends StatelessWidget {
           color: Colors.white,
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextFormField(
               validator: (value) {
