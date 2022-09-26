@@ -13,6 +13,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Box<TodoModel> todosBox;
+  late TextEditingController textEditingController;
+
+  @override
+  void dispose() {
+    // remove the deleted index holes/slots from database
+    // to free up the space
+    todosBox.compact();
+
+    todosBox.close();
+    super.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -20,8 +32,6 @@ class _HomePageState extends State<HomePage> {
     todosBox = Hive.box("TODOs");
     super.initState();
   }
-
-  late TextEditingController textEditingController;
 
   _simpleDialog() {
     showDialog(
