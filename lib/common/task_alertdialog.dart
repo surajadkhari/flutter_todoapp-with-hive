@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class TaskAlertDialog extends StatelessWidget {
-  const TaskAlertDialog(
-      {super.key,
-      required this.textEditingController,
-      required this.onSave,
-      required this.onCancel});
+  const TaskAlertDialog({
+    super.key,
+    required this.textEditingController,
+    required this.onSave,
+    required this.onCancel,
+  });
   final TextEditingController textEditingController;
   final VoidCallback onSave;
   final VoidCallback onCancel;
@@ -14,7 +15,7 @@ class TaskAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       content: Container(
-        height: 105,
+        height: 128,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(0),
           color: Colors.white,
@@ -22,6 +23,12 @@ class TaskAlertDialog extends StatelessWidget {
         child: Column(
           children: [
             TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              },
               controller: textEditingController,
               decoration: const InputDecoration(
                   hintText: "Add new Task",
