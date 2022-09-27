@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app_with_hive/model/task_model.dart';
-import 'app/common/task_alertdialog.dart';
-import 'app/common/todo_card.dart';
+import 'common/task_alertdialog.dart';
+import 'common/todo_card.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
