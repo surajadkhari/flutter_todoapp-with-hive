@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late Box<TodoModel> todosBox;
   late TextEditingController textEditingController;
-
+  final _formKey = GlobalKey<FormState>();
   @override
   void dispose() {
     // remove the deleted index holes/slots from database
@@ -37,55 +37,73 @@ class _HomePageState extends State<HomePage> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return SimpleDialog(
-          title: const Text('New TODO Task'),
-          children: <Widget>[
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    TextField(
-                      controller: textEditingController,
-                      decoration: const InputDecoration(
-                        hintText: 'TODO Task',
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.blue,
-                          ),
+        return Form(
+          key: _formKey,
+          child: SimpleDialog(
+            // title: const Text('New TODO Task'),
+            children: <Widget>[
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                        controller: textEditingController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.grey.withOpacity(0.3),
+                          hintText: 'Add new Task',
+                          border: InputBorder.none,
                         ),
-                        border: InputBorder.none,
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              TodoModel todoModel = TodoModel(
-                                  taskName: textEditingController.text);
-                              todosBox.add(todoModel);
-                              // _task = Task(task: inputTask);
-                              // _addTodo(_task);
-                              Navigator.pop(context);
-                            },
-                            child: const Text('Add'),
-                          ),
-                          ElevatedButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text('Cancel'),
-                          )
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 0, backgroundColor: Colors.green),
+                              onPressed: () {
+                                TodoModel todoModel = TodoModel(
+                                    taskName: textEditingController.text);
+                                setState(() {
+                                  if (_formKey.currentState!.validate()) {
+                                    todosBox.add(todoModel);
+                                    Navigator.pop(context);
+                                    textEditingController.clear();
+                                  }
+                                });
+                              },
+                              child: const Text('Add'),
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  // side: const BorderSide(color: Colors.red),
+                                  backgroundColor: Colors.red),
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text(
+                                'Cancel',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         );
       },
     );
